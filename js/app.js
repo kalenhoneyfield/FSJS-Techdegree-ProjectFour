@@ -49,7 +49,7 @@ document.body.addEventListener('keyup', (e) => {
         }
     }
     else if(!overlay.classList.contains('hidden')){ //if the overlay is showing, then allow the user to start the game with the enter key
-        if(e.code === 'Enter' && ready){
+        if(e.code === 'Enter'){
             game = null
             game = new Game()
             game.startGame()
