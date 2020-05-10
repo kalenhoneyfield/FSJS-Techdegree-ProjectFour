@@ -14,7 +14,7 @@ class Game {
         ]
         this.activePhrase = null //to hold the string for the current active phrase
         this.gamePhrase = null //to hold the active Phrase object for $this game
-        this.gameWin = null
+        this.gameWin = null //did we win?
     }
 
     startGame(){
@@ -119,14 +119,14 @@ class Game {
         // updates the overlay h1 element with a friendly win or loss message, 
         // and replaces the overlay’s start CSS class with either the win or lose CSS class.
         // ready = false
-        startResetGamebtn.disabled = true
+        startResetGamebtn.disabled = true //disable the start game button long enough for animations to complete, this is really only needed for the edge case where someone is spamming through games
         setTimeout(()=>{
             startResetGamebtn.disabled = false
         }, 2000)
         const overlay = document.getElementById('overlay')
         const msg = document.getElementById('game-over-message')
         overlay.classList.remove('hidden')
-        overlay.style.zIndex = 99
+        overlay.style.zIndex = 99 //animate.css causes some animations to still be visiable through the overlay lets fix that
         if(this.gameWin){
             addRemoveAnimation(overlay, 'rollIn')
             msg.innerHTML = `Congratulations <br> You guessed <br> <span> ${this.activePhrase} </span> <br> correctly`
@@ -145,7 +145,7 @@ class Game {
 
     resetGame(){
         //clear the board and start fresh
-        
+        //this method is used to ensure that regardless of how the user gets to the start new game portion, there is consistency across use cases
         const letters = document.querySelectorAll('.letter')
         letters.forEach(item => {
             item.remove()
