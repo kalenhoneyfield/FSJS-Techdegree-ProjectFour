@@ -46,6 +46,7 @@ document.body.addEventListener('keyup', (e) => {
         if(regex.test(e.code)){
             const letter = e.code.replace(regex, '$2').toLowerCase()
             game.handleInteraction(letter)
+            
         }
     }
     else if(!overlay.classList.contains('hidden')){ //if the overlay is showing, then allow the user to start the game with the enter key
@@ -58,6 +59,19 @@ document.body.addEventListener('keyup', (e) => {
     
     
 })
+
+//play a predetermined mp3 file
+const playSound = (status, volume) => {
+    const audio = {
+        typing: 'typewriter.mp3',
+        typingDud: 'typewriter-dud.mp3',
+        win: 'Ta-da-orchestra-fanfare.mp3',
+        lose: 'Sad-trombone.mp3',
+    }
+    let snd = new Audio("audio/" + audio[status]);
+    snd.volume = volume;
+    snd.play();
+}
 
 /*
 Code derived from the function published at https://animate.style/

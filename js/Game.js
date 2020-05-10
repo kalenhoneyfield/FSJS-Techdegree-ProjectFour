@@ -52,6 +52,7 @@ class Game {
         //     call the showMatchedLetter() method on the phrase, 
         //     and then call the checkForWin() method. 
         //     If the player has won the game, also call the gameOver() method.
+        
         const onScreenKeyboard = document.querySelectorAll('.key')
         let selectedKey = null
         onScreenKeyboard.forEach(key => { //figure out which key was press or selected
@@ -60,9 +61,11 @@ class Game {
             }
         })
         if(selectedKey.classList.contains('disabled')){ //check is we have already used this letter
+            playSound('typingDud', 0.5)
             return null
         }
         else if( this.gamePhrase.checkLetter(letter) ){
+            playSound('typing', 1)
             selectedKey.classList.add('chosen','disabled')
             addRemoveAnimation(selectedKey, 'bounceIn')
             
@@ -73,6 +76,7 @@ class Game {
             }
         }
         else{
+            playSound('typing', 1)
             selectedKey.classList.add('wrong', 'disabled')
             addRemoveAnimation(selectedKey, 'wobble')
             this.removeLife()
@@ -132,12 +136,14 @@ class Game {
             msg.innerHTML = `Congratulations <br> You guessed <br> <span> ${this.activePhrase} </span> <br> correctly`
             overlay.classList.remove('start')
             overlay.classList.add('win')
+            playSound('win', 1)
         }
         else{
             addRemoveAnimation(overlay, 'lightSpeedIn')
             msg.innerHTML = `Doh! <br> <span> ${this.activePhrase} </span><br> was the correct phrase`
             overlay.classList.remove('start')
             overlay.classList.add('lose')
+            playSound('lose', 1)
         }
         
         
