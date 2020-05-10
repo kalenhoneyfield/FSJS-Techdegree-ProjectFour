@@ -14,6 +14,7 @@ class Game {
         ]
         this.activePhrase = null //to hold the string for the current active phrase
         this.gamePhrase = null //to hold the active Phrase object for $this game
+        this.gameWin = null
     }
 
     startGame(){
@@ -23,7 +24,9 @@ class Game {
         // the addPhraseToDisplay() method on the active Phrase object.
         this.resetGame()
         const overlay = document.getElementById('overlay')
-        overlay.classList.add('animated', 'flipOutX')
+        addRemoveAnimation(overlay, 'flipOutX', ()=>{
+            overlay.classList.add('hidden')
+        })
         this.activePhrase = this.getRandomPhrase()
         this.gamePhrase = new Phrase(this.activePhrase)
         this.gamePhrase.addPhraseToDisplay()
@@ -56,12 +59,22 @@ class Game {
                 selectedKey = key //assign the DOM elem to the key
             }
         })
-        if( this.gamePhrase.checkLetter(letter) ){
-            selectedKey.classList.add('chosen', 'animated', 'bounceIn')
+        if(selectedKey.classList.contains('disabled')){ //check is we have already used this letter
+            return null
+        }
+        else if( this.gamePhrase.checkLetter(letter) ){
+            selectedKey.classList.add('chosen','disabled')
+            addRemoveAnimation(selectedKey, 'bounceIn')
+            
             this.gamePhrase.showMatchedLetter(letter)
+            // this.checkForWin()
+            if( this.checkForWin() ){
+                this.gameOver()
+            }
         }
         else{
-            selectedKey.classList.add('wrong', 'animated', 'wobble')
+            selectedKey.classList.add('wrong', 'disabled')
+            addRemoveAnimation(selectedKey, 'wobble')
             this.removeLife()
         }
     }
@@ -75,13 +88,11 @@ class Game {
         const tries = document.querySelectorAll('.tries')
         if(this.missed < 4){
             const index = this.missed
-            tries[index].classList.add('animated', 'hinge') //sad heart
-            setTimeout(() => { //a timeout to allow enough time for the animation to occur
+            addRemoveAnimation(tries[index], 'hinge', ()=>{
                 tries[index].firstChild.src = 'images/lostHeart.png'
-                tries[index].classList.remove('animated', 'hinge')
-            }, 2000);
-            console.log(this.missed)
+            })
             this.missed++
+            document.body.className = bgArray[this.missed]
         }
         else{
             this.gameOver()
@@ -90,6 +101,16 @@ class Game {
 
     checkForWin(){ 
         // this method checks to see if the player has revealed all of the letters in the active phrase. 
+        let winning = true
+        const phraseLetters = document.getElementById('phrase').getElementsByTagName('ul')[0].querySelectorAll('.letter')
+        phraseLetters.forEach(item => {
+            if(item.classList.contains('hide')){
+                winning = false
+            }
+        })
+        this.gameWin = winning
+        return winning
+
     }
 
     gameOver(){ 
@@ -97,30 +118,50 @@ class Game {
         // and depending on the outcome of the game, 
         // updates the overlay h1 element with a friendly win or loss message, 
         // and replaces the overlay’s start CSS class with either the win or lose CSS class.
+        // ready = false
+        startResetGamebtn.disabled = true
+        setTimeout(()=>{
+            startResetGamebtn.disabled = false
+        }, 2000)
+        const overlay = document.getElementById('overlay')
+        const msg = document.getElementById('game-over-message')
+        overlay.classList.remove('hidden')
+        overlay.style.zIndex = 99
+        if(this.gameWin){
+            addRemoveAnimation(overlay, 'rollIn')
+            msg.innerHTML = `Congratulations <br> You guessed <br> <span> ${this.activePhrase} </span> <br> correctly`
+            overlay.classList.remove('start')
+            overlay.classList.add('win')
+        }
+        else{
+            addRemoveAnimation(overlay, 'lightSpeedIn')
+            msg.innerHTML = `Doh! <br> <span> ${this.activePhrase} </span><br> was the correct phrase`
+            overlay.classList.remove('start')
+            overlay.classList.add('lose')
+        }
         
-        // const overlay = document.getElementById('overlay')
-        // overlay.classList.remove('animated', 'flipOutX')
-        const ani = document.querySelectorAll('.animated')
-        ani.forEach(elem => {
-            elem.classList.remove('animated', 'flipOutX', 'hinge', 'hinge', 'wobble', 'bounceIn' )
-        })
+        
     }
 
     resetGame(){
         //clear the board and start fresh
+        
         const letters = document.querySelectorAll('.letter')
         letters.forEach(item => {
             item.remove()
         })
         const onScreenKeyboard = document.querySelectorAll('.key')
         onScreenKeyboard.forEach(key => {
-            key.classList.remove('wrong', 'chosen')
+            key.classList.remove('wrong', 'chosen', 'disabled')
         })
         const tries = document.querySelectorAll('.tries')
         tries.forEach(item => {
             item.firstChild.src = 'images/liveHeart.png'
         })
-        
+        overlay.classList.remove('win','lose')
+        overlay.classList.add('start')
         this.missed = 0
+        document.body.className = bgArray[this.missed]
     }
+
 }

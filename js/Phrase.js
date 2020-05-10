@@ -50,7 +50,7 @@
         const letterClass = document.querySelectorAll(`.${letter.toLowerCase()}`)
         letterClass.forEach(item => {
             item.classList.remove('hide')
-            item.classList.add('animated', 'rubberBand')
+            addRemoveAnimation(item, 'rubberBand')
             item.classList.add('show')
         })
         

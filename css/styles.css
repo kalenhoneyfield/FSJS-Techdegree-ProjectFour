@@ -62,7 +62,7 @@ button {
 
 #btn__reset {
 	width: 200px;
-	margin: 0 auto;
+  margin: 0 auto;
 }
 
 .main-container {
@@ -87,6 +87,7 @@ button {
 
 .header {
   color: #3a3f58;
+  text-shadow: 2px 2px 5px #C02425;
 }
 
 
@@ -101,6 +102,7 @@ button {
   color: transparent;
   background: var(--color-neutral-light);
   border-radius: 5px;
+  border: 2px dotted #C02425;
 }
 
 .space {
@@ -176,11 +178,18 @@ button {
 }
 
 .title {
-  color: #FFF;
+  /* color: #FFF; */
+  background: -webkit-linear-gradient(20deg, rgba(255,255,255,1) 0%, rgba(9,9,121,1) 100%);
+  background-clip: inherit;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .start {
-  background-color: #3a3f58;
+  /* background-color: #3a3f58; */
+  background: #FF5F6D;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to top, #FFC371, #FF5F6D);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to top, #FFC371, #FF5F6D); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
 .start a {
@@ -188,7 +197,11 @@ button {
 }
 
 .win {
-  background-color: var(--color-win);
+  /* background-color: var(--color-win); */
+  background: #3CA55C;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to top, #B5AC49, #3CA55C);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to top, #B5AC49, #3CA55C); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  
 }
 
 .win a {
@@ -196,7 +209,11 @@ button {
 }
 
 .lose {
-  background-color: #f5785f;
+  /* background-color: #f5785f; */
+  background: #e96443;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to bottom, #904e95, #e96443);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to bottom, #904e95, #e96443); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
 }
 
 .lose a {

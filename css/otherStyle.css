@@ -1,0 +1,35 @@
+/* Addtional styles */
+
+.hidden{
+    display: none !important;
+}
+
+.five{
+    background: #C02425; /* fallback for old browsers */
+    background: -webkit-linear-gradient(to top, #F0CB35, #C02425);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to top, #F0CB35, 100%, #C02425); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.four{
+    background: #C02425; /* fallback for old browsers */
+    background: -webkit-linear-gradient(to top, #F0CB35, #C02425);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to top, #F0CB35, 80%, #C02425); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.three{
+    background: #C02425; /* fallback for old browsers */
+    background: -webkit-linear-gradient(to top, #F0CB35, #C02425);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to top, #F0CB35, 60%, #C02425); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.two{
+    background: #C02425; /* fallback for old browsers */
+    background: -webkit-linear-gradient(to top, #F0CB35, #C02425);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to top, #F0CB35, 40%, #C02425); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.one{
+    background: #C02425; /* fallback for old browsers */
+    background: -webkit-linear-gradient(to top, #F0CB35, #C02425);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to top, #F0CB35, 20%, #C02425); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}

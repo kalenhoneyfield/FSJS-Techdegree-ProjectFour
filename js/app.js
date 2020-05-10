@@ -21,7 +21,9 @@
 
 const startResetGamebtn = document.getElementById('btn__reset')
 const onScreenKeyboard = document.querySelectorAll('.key')
+const overlay = document.getElementById('overlay')
 let game
+const bgArray = ['five', 'four', 'three', 'two', 'one']
 
 startResetGamebtn.addEventListener('click', () => {
     game = null
@@ -39,10 +41,41 @@ onScreenKeyboard.forEach(key =>{
 
 //add event listener for the keyboard
 document.body.addEventListener('keyup', (e) => { 
-    const regex = new RegExp(/(^Key)([A-Z])/) //we only care about the letters
-    if(regex.test(e.code)){
-        const letter = e.code.replace(regex, '$2').toLowerCase()
-        game.handleInteraction(letter)
+    if(overlay.classList.contains('hidden')){ //if the overlay is hidden we should do something with the keys
+        const regex = new RegExp(/(^Key)([A-Z])/) //we only care about the letters
+        if(regex.test(e.code)){
+            const letter = e.code.replace(regex, '$2').toLowerCase()
+            game.handleInteraction(letter)
+        }
+    }
+    else if(!overlay.classList.contains('hidden')){ //if the overlay is showing, then allow the user to start the game with the enter key
+        if(e.code === 'Enter' && ready){
+            game = null
+            game = new Game()
+            game.startGame()
+        }
     }
     
+    
 })
+
+/*
+Code derived from the function published at https://animate.style/
+This is the site that the animate.css is now hosted at
+*/
+const addRemoveAnimation = (elem, animationName, callback) =>
+    
+    new Promise((resolve, reject) => {
+
+    elem.classList.add(`animated`, animationName) 
+
+    const handleAnimationEnd = () => {
+        elem.classList.remove(`animated`, animationName)
+        elem.removeEventListener('animationend', handleAnimationEnd)
+        
+        callback ? callback() : false //if we have a callback, run it, otherwise ignore
+        resolve('Animation ended')
+    }
+
+    elem.addEventListener('animationend', handleAnimationEnd)
+});
