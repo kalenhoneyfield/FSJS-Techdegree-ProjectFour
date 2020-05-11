@@ -12,8 +12,8 @@ class Game {
             {phrase: 'Close But No Cigar'},
             {phrase: 'Number five is alive'},
         ]
-        this.activePhrase = null //to hold the string for the current active phrase
-        this.gamePhrase = null //to hold the active Phrase object for $this game
+        this.activePhrase = null //to hold the active Phrase object for $this game
+        this.gamePhrase = null //to hold the string for the current active phrase
         this.gameWin = null //did we win?
     }
 
@@ -23,9 +23,9 @@ class Game {
         addRemoveAnimation(overlay, 'flipOutX', ()=>{
             overlay.classList.add('hidden')
         })
-        this.activePhrase = this.getRandomPhrase()
-        this.gamePhrase = new Phrase(this.activePhrase)
-        this.gamePhrase.addPhraseToDisplay()
+        this.gamePhrase = this.getRandomPhrase()
+        this.activePhrase = new Phrase(this.gamePhrase)
+        this.activePhrase.addPhraseToDisplay()
     } 
 
     getRandomPhrase(){ 
@@ -45,12 +45,12 @@ class Game {
             playSound('typingDud', 0.5)
             return null
         }
-        else if( this.gamePhrase.checkLetter(letter) ){
+        else if( this.activePhrase.checkLetter(letter) ){
             playSound('typing', 1)
             selectedKey.classList.add('chosen','disabled')
             addRemoveAnimation(selectedKey, 'bounceIn')
             
-            this.gamePhrase.showMatchedLetter(letter)
+            this.activePhrase.showMatchedLetter(letter)
             if( this.checkForWin() ){
                 this.gameOver()
             }
@@ -102,14 +102,14 @@ class Game {
         overlay.style.zIndex = 99 //animate.css causes some animations to still be visiable through the overlay lets fix that
         if(this.gameWin){
             addRemoveAnimation(overlay, 'rollIn')
-            msg.innerHTML = `Congratulations <br> You guessed <br> <span> "${this.activePhrase}" </span> <br> correctly`
+            msg.innerHTML = `Congratulations <br> You guessed <br> <span> "${this.gamePhrase}" </span> <br> correctly`
             overlay.classList.remove('start')
             overlay.classList.add('win')
             playSound('win', 1)
         }
         else{
             addRemoveAnimation(overlay, 'lightSpeedIn')
-            msg.innerHTML = `Doh! <br> <span> "${this.activePhrase}" </span><br> was the correct phrase`
+            msg.innerHTML = `Doh! <br> <span> "${this.gamePhrase}" </span><br> was the correct phrase`
             overlay.classList.remove('start')
             overlay.classList.add('lose')
             playSound('lose', 1)
