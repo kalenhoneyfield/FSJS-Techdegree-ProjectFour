@@ -125,6 +125,10 @@ class Game {
         letters.forEach(item => {
             item.remove()
         })
+        const spaces = document.querySelectorAll('.space')
+        spaces.forEach(item => {
+            item.remove()
+        })
         const onScreenKeyboard = document.querySelectorAll('.key')
         onScreenKeyboard.forEach(key => {
             key.classList.remove('wrong', 'chosen', 'disabled')
